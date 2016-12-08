@@ -9293,12 +9293,12 @@ bool validateEventStageMask(VkQueue queue, GLOBAL_CB_NODE *pCB, uint32_t eventCo
     // but set event can be called at any time.
     if (sourceStageMask != stageMask && sourceStageMask != (stageMask | VK_PIPELINE_STAGE_HOST_BIT)) {
         skip_call |= log_msg(dev_data->report_data, VK_DEBUG_REPORT_ERROR_BIT_EXT, (VkDebugReportObjectTypeEXT)0, 0, __LINE__,
-                             DRAWSTATE_INVALID_EVENT, "DS", "Submitting cmdbuffer with call to VkCmdWaitEvents "
+                             VALIDATION_ERROR_00254, "DS", "Submitting cmdbuffer with call to VkCmdWaitEvents "
                                                             "using srcStageMask 0x%X which must be the bitwise "
                                                             "OR of the stageMask parameters used in calls to "
                                                             "vkCmdSetEvent and VK_PIPELINE_STAGE_HOST_BIT if "
-                                                            "used with vkSetEvent but instead is 0x%X.",
-                             sourceStageMask, stageMask);
+                                                            "used with vkSetEvent but instead is 0x%X. %s",
+                             sourceStageMask, stageMask, validation_error_map[VALIDATION_ERROR_00254]);
     }
     return skip_call;
 }
